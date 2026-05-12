@@ -1,76 +1,85 @@
 # Cloud Anomaly Detection Dashboard
 
-A full-stack monitoring system that simulates cloud infrastructure data and detects anomalies in real-time using Machine Learning. 
+I built this because I wanted to understand how anomaly detection actually works in cloud systems. The idea is simple - simulate cloud server data (CPU, memory, disk, network), feed it into ML models, and flag anything that looks suspicious.
 
-This project was built to demonstrate the integration of machine learning models into a live data pipeline. It features a FastAPI backend for data processing and inference, and a Streamlit dashboard for real-time visualization.
-
----
-
-## Architectural Overview
-
-The system utilizes a decoupled client-server architecture:
-
-1. **FastAPI Backend**: The core server. It receives simulated telemetry data, runs ML inference to detect anomalies using Scikit-Learn, and manages a local SQLite database for history.
-2. **Monitoring Dashboard**: A Streamlit web app for real-time data visualization and system controls.
-3. **Telemetry Source (Simulator)**: Continuous background data feed (`live_simulator.py`) or manual edge-injection (`injector_ui.py`) to simulate traffic.
+It turned out to be way more interesting than I expected. I ended up building a full-stack app with a FastAPI backend, a Streamlit dashboard, and even a basic auto-quarantine system that blocks devices if they keep sending malicious-looking data.
 
 ---
 
-## Key Features
+## What it does
 
-- **Real-Time Anomaly Detection**: Uses Isolation Forests and Autoencoder-based approaches (via MLPRegressor) to flag irregular behavior in telemetry data.
-- **Automated Quarantine Simulation**: When the ML engine detects consecutive high-severity anomalies from a specific device, it simulates a quarantine by temporarily blocking requests.
-- **Interactive Visualizations**: Includes various time-series charts and a 3D mapping component (using Pydeck) to track simulated threat origins.
+The system has 3 main parts:
+
+1. **Backend (FastAPI)** - receives telemetry data, runs the ML models on it, stores results in SQLite
+2. **Dashboard (Streamlit)** - shows real-time charts, a 3D globe for tracking where threats come from, and controls for the quarantine system
+3. **Simulator** - generates fake cloud data and sends it to the backend continuously so the dashboard has something to display
+
+The ML side uses two models:
+- **Isolation Forest** for detecting anomalies in numeric metrics (CPU spikes, memory leaks etc)
+- **Autoencoder** (MLPRegressor) for detecting weird patterns in log messages
+
+Both scores are combined with a weighted hybrid system to make the final call.
 
 ---
 
-## Technology Stack
+## Tech Stack
 
-- **Backend**: Python, FastAPI, SQLAlchemy, Pydantic
-- **Frontend**: Streamlit, Plotly, Pydeck
-- **Machine Learning**: Scikit-Learn (Isolation Forest & MLPRegressor)
-- **Database**: SQLite
+- Python, FastAPI, SQLAlchemy, SQLite
+- Streamlit, Plotly, Pydeck
+- Scikit-Learn (Isolation Forest + MLPRegressor)
 
 ---
 
-## Quick Start Guide
+## How to run it
 
-To run the platform locally, launch these processes in three separate terminals:
+You need 3 terminals open:
 
-### 1. Start the Backend Server (Terminal 1)
-```powershell
+**Terminal 1 - Start the backend:**
+```
 python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-### 2. Start the Dashboard (Terminal 2)
-```powershell
+**Terminal 2 - Start the dashboard:**
+```
 streamlit run dashboard/app.py
 ```
 
-### 3. Start the Data Simulator (Terminal 3)
-The dashboard requires live data to display charts. Choose one of the following:
+**Terminal 3 - Start the simulator:**
+```
+python simulator/live_simulator.py
+```
 
-* **Continuous Live Simulation** (Recommended)
-  ```powershell
-  python simulator/live_simulator.py
-  ```
-* **Manual Anomaly Injection UI** (For testing specific scenarios)
-  ```powershell
-  streamlit run simulator/injector_ui.py --server.port 8502
-  ```
+The dashboard won't show any data until the simulator is running.
 
 ---
 
-## Testing & Validation
+## Quarantine System
 
-To observe the system's response to threats:
-1. Open the Manual Injector UI (`http://localhost:8502`).
-2. Trigger a "Memory Leak" or "DDoS" simulation.
-3. Watch the main dashboard flag the anomaly.
-4. If a device gets blocked by the quarantine system, use `python unquarantine.py` to reset the environment.
+If the model detects something really bad (like a DDoS pattern or extreme memory leak), the backend automatically blocks that device from sending more requests. You can see blocked devices on the dashboard and release them manually, or run `python unquarantine.py` to clear everything.
+
+---
+
+## Testing
+
+1. Run the simulator and watch the dashboard update in real-time
+2. You can also use the manual injector UI to trigger specific anomalies:
+   ```
+   streamlit run simulator/injector_ui.py --server.port 8502
+   ```
+3. Try triggering a "Memory Leak" or "DDoS" and see the quarantine kick in
+
+---
+
+## What I learned
+
+- How Isolation Forests work for anomaly detection (they basically isolate outliers by randomly splitting the data)
+- How autoencoders detect anomalies (train them to reconstruct normal data, high reconstruction error = anomaly)
+- Building REST APIs with FastAPI and connecting them to a frontend
+- Working with SQLAlchemy and SQLite for data persistence
+- Real-time data visualization with Streamlit and Plotly
 
 ---
 
 ## License
 
-MIT License.
+MIT

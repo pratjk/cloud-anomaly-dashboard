@@ -1,21 +1,24 @@
+# database models
+
 from sqlalchemy import Column, Integer, Float, String, DateTime
 from datetime import datetime
 from backend.database import Base
+
 
 class Prediction(Base):
     __tablename__ = "predictions"
 
     id = Column(Integer, primary_key=True, index=True)
-    device_id = Column(String, nullable=True, default="Unknown")
-    cpu_usage = Column(Float, nullable=False, default=0.0)
-    memory_usage = Column(Float, nullable=False, default=0.0)
-    disk_io = Column(Float, nullable=False, default=0.0)
-    network_traffic = Column(Float, nullable=False, default=0.0)
-    prediction = Column(String, nullable=False, default="Normal")
-    cause = Column(String, nullable=True, default="Not available")
-    remediation = Column(String, nullable=True, default="None")
-    latitude = Column(Float, nullable=True, default=0.0)
-    longitude = Column(Float, nullable=True, default=0.0)
+    device_id = Column(String, default="Unknown")
+    cpu_usage = Column(Float, default=0.0)
+    memory_usage = Column(Float, default=0.0)
+    disk_io = Column(Float, default=0.0)
+    network_traffic = Column(Float, default=0.0)
+    prediction = Column(String, default="Normal")
+    cause = Column(String, default="Not available")
+    remediation = Column(String, default="None")
+    latitude = Column(Float, default=0.0)
+    longitude = Column(Float, default=0.0)
     timestamp = Column(DateTime, default=datetime.utcnow)
 
     def to_dict(self):
@@ -34,12 +37,14 @@ class Prediction(Base):
             "timestamp": self.timestamp.isoformat() if self.timestamp else None
         }
 
+
 class QuarantinedDevice(Base):
+    # devices that are blocked because of repeated anomalies
     __tablename__ = "quarantined_devices"
 
     id = Column(Integer, primary_key=True, index=True)
     device_id = Column(String, unique=True, index=True)
-    reason = Column(String, nullable=True)
+    reason = Column(String)
     timestamp = Column(DateTime, default=datetime.utcnow)
 
     def to_dict(self):
