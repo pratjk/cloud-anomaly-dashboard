@@ -1,33 +1,4 @@
-"""
-Cloud Anomaly Detection - FastAPI Backend
-
-HTTP REST API for anomaly detection predictions on cloud metrics.
-Integrates hybrid metric and log-based anomaly detection models.
-
-Endpoints:
-    - POST /predict: Submit metrics/logs, get anomaly prediction
-    - GET /predictions: Retrieve all stored predictions from database
-    - GET /health: Comprehensive health check (database, model availability)
-    - GET /: Basic health check/status endpoint
-
-Request Flow for /predict:
-    1. Validate request structure (dict, non-empty)
-    2. Extract and validate metrics (cpu, memory, disk, network)
-    3. Extract log message
-    4. Run hybrid prediction model
-    5. Store prediction in database
-    6. Check if model retraining is needed (every 50 records)
-    7. Retrain model if version stale
-    8. Return prediction result with cause
-
-Configuration:
-    - MODEL_RETRAIN_INTERVAL: Records between retraining (default: 50)
-    - MODEL_VERSION_FILE: Version tracking file path
-    - DATABASE_TIMEOUT: Request timeout to database
-
-Returns:
-    JSON responses with anomaly prediction and cause/error details
-"""
+# Cloud Anomaly Detection - FastAPI Backend
 
 import logging
 import os
@@ -53,11 +24,7 @@ from database.models import Prediction, QuarantinedDevice
 from ml.predict import predict_anomaly
 from ml.retrain import retrain_model
 
-# ============================================================================
-# Configuration Section
-# ============================================================================
-
-# Environment-based configuration
+# Config
 API_HOST = os.getenv("API_HOST", "127.0.0.1")
 API_PORT = int(os.getenv("API_PORT", "8000"))
 CORS_ORIGINS = ["*"]  # Allow all origins for development
@@ -67,24 +34,12 @@ MODEL_VERSION_FILE: str = os.getenv("MODEL_VERSION_FILE", "ml/model_version.txt"
 METRIC_MODEL_PATH: str = os.getenv("METRIC_MODEL_PATH", "ml/model.pkl")
 LOG_MODEL_PATH: str = os.getenv("LOG_MODEL_PATH", "ml/log_model.pkl")
 
-# ============================================================================
-# Logging Setup
-# ============================================================================
-
+# Setup logging
 logger = logging.getLogger(__name__)
 os.makedirs("logs", exist_ok=True)
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("logs/system.log"),
-        logging.StreamHandler()
-    ]
-)
+logging.basicConfig(level=logging.INFO)
 
-# ============================================================================
-# FastAPI App Initialization
-# ============================================================================
+# Initialize FastAPI app
 
 app = FastAPI(
     title="Cloud Anomaly Detection API",
@@ -101,9 +56,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ============================================================================
 # Global Exception Handler
-# ============================================================================
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc: Exception) -> dict:
@@ -129,9 +82,7 @@ except Exception as e:
     raise
 
 
-# ============================================================================
 # Helper Functions
-# ============================================================================
 
 def _validate_request_data(data: Any) -> None:
     """
@@ -438,9 +389,7 @@ def _check_model_version() -> Tuple[bool, str]:
         return False, f"Error reading version: {str(e)}"
 
 
-# ============================================================================
 # API Endpoints
-# ============================================================================
 
 @app.get("/quarantine")
 def list_quarantine(db: Session = Depends(get_db_session)):
@@ -495,10 +444,7 @@ def predict(data: dict, db: Session = Depends(get_db_session)) -> dict:
 
     """
     try:
-        logger.info("=" * 60)
-        logger.info("Received prediction request")
-
-        # ===== Step 1: Validate request structure =====
+        # Step 1: Validate request structure
         try:
             _validate_request_data(data)
         except ValueError as e:
@@ -570,16 +516,7 @@ def predict(data: dict, db: Session = Depends(get_db_session)) -> dict:
             logger.error(f"Database operation failed: {e}", exc_info=True)
             # Continue without failing - return prediction even if storage fails
 
-        # ===== Step 6: Check and trigger model retraining if needed =====
-        if stored:
-            try:
-                with SessionLocal() as db:
-                    _check_and_retrain_model(db)
-            except Exception as e:
-                logger.error(f"Retrain check failed: {e}", exc_info=True)
-                # Silently fail - don't interrupt prediction response
-
-        logger.info("=" * 60)
+        # Step 6: Check and trigger model retraining if needed
         return {
             "status": "success",
             "prediction": prediction,

@@ -1,7 +1,4 @@
-"""
-Log Anomaly Detection Model
-Detects anomalies in log data using neural network-based autoencoder approach.
-"""
+# Log Anomaly Detection Model
 
 import logging
 from pathlib import Path
@@ -12,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPRegressor
 import joblib
 
-# ================== Configuration ==================
+# Config
 DEFAULT_MODEL_PATH = "ml/log_model.pkl"
 HIDDEN_LAYER_SIZES = (16, 8, 16)
 MAX_ITERATIONS = 500
@@ -20,7 +17,7 @@ ANOMALY_PERCENTILE_THRESHOLD = 99
 MINIMUM_SAMPLES = 2
 MINIMUM_FEATURES = 1
 
-# ================== Logging Setup ==================
+# Logging Setup
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
