@@ -1,107 +1,76 @@
 # Cloud Anomaly Detection Dashboard
 
-A full-stack monitoring project that simulates cloud infrastructure data and detects anomalies in real-time using Machine Learning (Isolation Forests & Autoencoders). 
+A full-stack monitoring system that simulates cloud infrastructure data and detects anomalies in real-time using Machine Learning. 
 
-It features a FastAPI backend for data processing and a Streamlit dashboard for visualization.
-
----
-
-## 🏛️ Architectural Overview
-
-The system utilizes a strictly **decoupled client-server architecture**, mimicking distributed production environments:
-
-1.  **FastAPI Backend**: The core server. It receives simulated telemetry data, runs ML inference to detect anomalies, and manages a local SQLite database.
-2.  **Monitoring Dashboard**: A Streamlit web app for real-time data visualization and system controls.
-3.  **Telemetry Source (Simulator)**: Continuous background data feed (`live_simulator.py`) or manual edge-injection (`injector_ui.py`). **The dashboard will appear static unless a simulator is running.**
+This project was built to demonstrate the integration of machine learning models into a live data pipeline. It features a FastAPI backend for data processing and inference, and a Streamlit dashboard for real-time visualization.
 
 ---
 
-## 🚀 Quick Start Guide
+## Architectural Overview
 
-To see the platform in action with **live moving data**, launch these in **three separate terminals**:
+The system utilizes a decoupled client-server architecture:
 
-### 1. The Inference Server (Terminal 1)
+1. **FastAPI Backend**: The core server. It receives simulated telemetry data, runs ML inference to detect anomalies using Scikit-Learn, and manages a local SQLite database for history.
+2. **Monitoring Dashboard**: A Streamlit web app for real-time data visualization and system controls.
+3. **Telemetry Source (Simulator)**: Continuous background data feed (`live_simulator.py`) or manual edge-injection (`injector_ui.py`) to simulate traffic.
+
+---
+
+## Key Features
+
+- **Real-Time Anomaly Detection**: Uses Isolation Forests and Autoencoder-based approaches (via MLPRegressor) to flag irregular behavior in telemetry data.
+- **Automated Quarantine Simulation**: When the ML engine detects consecutive high-severity anomalies from a specific device, it simulates a quarantine by temporarily blocking requests.
+- **Interactive Visualizations**: Includes various time-series charts and a 3D mapping component (using Pydeck) to track simulated threat origins.
+
+---
+
+## Technology Stack
+
+- **Backend**: Python, FastAPI, SQLAlchemy, Pydantic
+- **Frontend**: Streamlit, Plotly, Pydeck
+- **Machine Learning**: Scikit-Learn (Isolation Forest & MLPRegressor)
+- **Database**: SQLite
+
+---
+
+## Quick Start Guide
+
+To run the platform locally, launch these processes in three separate terminals:
+
+### 1. Start the Backend Server (Terminal 1)
 ```powershell
 python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-### 2. The Command Center (Terminal 2)
+### 2. Start the Dashboard (Terminal 2)
 ```powershell
 streamlit run dashboard/app.py
 ```
 
-### 3. The Live Data Feed (Terminal 3)
-Choose **ONE** of the following depending on your needs:
+### 3. Start the Data Simulator (Terminal 3)
+The dashboard requires live data to display charts. Choose one of the following:
 
-*   **Option A: Continuous Live Simulation (Recommended for UI testing)**
-    ```powershell
-    python simulator/live_simulator.py
-    ```
-*   **Option B: Manual Anomaly Injection (Interactive UI)**
-    ```powershell
-    streamlit run simulator/injector_ui.py --server.port 8502
-    ```
-
----
-
-## 🛡️ Quarantine System
-
-The project features a basic quarantine mechanism. When the ML engine detects consecutive high-severity anomalies from a specific device:
-
--   **Blocking**: The backend temporarily rejects requests from the blocked `device_id`.
--   **Logging**: Blocked attempts are logged.
--   **Override**: A utility script (`unquarantine.py`) can be used to reset device status.
-
-
+* **Continuous Live Simulation** (Recommended)
+  ```powershell
+  python simulator/live_simulator.py
+  ```
+* **Manual Anomaly Injection UI** (For testing specific scenarios)
+  ```powershell
+  streamlit run simulator/injector_ui.py --server.port 8502
+  ```
 
 ---
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
-To ensure the platform is operating at peak efficiency, follow these testing protocols:
-
-1.  **Manual Injection**: Use the [Injector UI](http://localhost:8502) to trigger a "Memory Leak" and observe the "Cyber Jail" protocol in action.
-2.  **Unit Tests**: Run `pytest tests/` to validate core ML and API logic.
-3.  **End-to-End**: Run `python simulator/live_simulator.py` and verify charts move in the Dashboard.
-4.  **Security Reset**: Run `python unquarantine.py` to clear the environment after a security test.
-
-Refer to the [**TESTING_GUIDE.md**](file:///c:/Users/Solgaleo/Downloads/cloud-anomaly-detection/cloud-anomaly-detection/TESTING_GUIDE.md) for detailed test cases.
+To observe the system's response to threats:
+1. Open the Manual Injector UI (`http://localhost:8502`).
+2. Trigger a "Memory Leak" or "DDoS" simulation.
+3. Watch the main dashboard flag the anomaly.
+4. If a device gets blocked by the quarantine system, use `python unquarantine.py` to reset the environment.
 
 ---
 
-## 🌟 Key Features
+## License
 
-### Automated Response Simulation
-When an anomaly is detected, the backend can simulate a basic response (e.g. blocking the device) to demonstrate automated handling.
-
-### Interactive Visualizations
-The dashboard includes various charts and a 3D globe (using Pydeck) to map simulated threat origins.
-
----
-
-## 🛠️ Technology Stack
-
--   **Backend**: FastAPI, SQLAlchemy, Pydantic
--   **Frontend**: Streamlit, Plotly, Pydeck
--   **ML Engine**: Scikit-Learn (Isolation Forest & MLPRegressor-based Autoencoder)
-
----
-
-## 📂 Project Anatomy
-
-```text
-├── backend/                  # FastAPI Core
-├── dashboard/                # Synthwave Monitoring UI
-├── simulator/                # Edge Client & Live Simulation
-├── ml/                       # Hybrid Intelligence (Predict/Retrain)
-├── database/                 # SQLAlchemy Models & Schemas
-├── logs/                     # Network-wide System Logs
-├── unquarantine.py           # Security Reset Utility
-├── .env.example              # Configuration Template
-└── CROSS_NETWORK_GUIDE.md    # ngrok Setup Instructions
-```
-
----
-
-## 📜 License
-MIT License. Built for advanced cloud observability research.
+MIT License.
