@@ -66,37 +66,37 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 DASHBOARD_STYLES = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 /* ── Global Reset ── */
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body, [class*="css"] {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    background-color: #f8fafc !important;
-    color: #0f172a !important;
+    font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+    background-color: #0a0a0a !important;
+    color: #e8e8e8 !important;
 }
 
-/* ── App background — pure white with very faint grid ── */
+/* ── App background — black with subtle grid ── */
 div[data-testid="stAppViewContainer"] {
-    background-color: #f8fafc;
+    background-color: #0a0a0a;
     background-image:
-        linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px;
+        linear-gradient(rgba(255,107,90,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,107,90,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
     min-height: 100vh;
 }
 
 /* ── Sidebar ── */
 div[data-testid="stSidebar"] {
-    background: #ffffff !important;
-    border-right: 1px solid #e2e8f0 !important;
+    background: #111111 !important;
+    border-right: 1px solid #222 !important;
 }
 
 /* ── Header bar ── */
 div[data-testid="stHeader"] {
-    background: rgba(255,255,255,0.95) !important;
-    border-bottom: 1px solid #e2e8f0 !important;
+    background: rgba(10,10,10,0.95) !important;
+    border-bottom: 1px solid #222 !important;
     backdrop-filter: blur(12px);
 }
 
@@ -108,12 +108,12 @@ div[data-testid="block-container"] {
 
 /* ── Metric cards ── */
 div[data-testid="metric-container"] {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 14px !important;
+    background: #141414 !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 0px !important;
     padding: 1.25rem 1.5rem !important;
-    box-shadow: 0 1px 6px rgba(15,23,42,0.06) !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
     position: relative;
     overflow: hidden;
 }
@@ -123,7 +123,7 @@ div[data-testid="metric-container"]::before {
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+    background: #FF6B5A;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -131,24 +131,22 @@ div[data-testid="metric-container"]::before {
 div[data-testid="metric-container"]:hover::before { opacity: 1; }
 
 div[data-testid="metric-container"]:hover {
-    border-color: #bfdbfe !important;
-    box-shadow: 0 4px 20px rgba(59,130,246,0.1) !important;
-    transform: translateY(-2px) !important;
+    border-color: #FF6B5A !important;
 }
 
 /* Metric label */
 div[data-testid="stMetricLabel"] > div {
-    color: #64748b !important;
+    color: #888 !important;
     font-size: 11px !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
-    letter-spacing: 1.5px !important;
-    font-family: 'Inter', sans-serif !important;
+    letter-spacing: 2px !important;
+    font-family: 'Space Grotesk', sans-serif !important;
 }
 
 /* Metric value */
 div[data-testid="stMetricValue"] > div {
-    color: #0f172a !important;
+    color: #ffffff !important;
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 1.875rem !important;
     font-weight: 700 !important;
@@ -158,24 +156,24 @@ div[data-testid="stMetricValue"] > div {
 /* Metric delta */
 div[data-testid="stMetricDelta"] > div {
     font-size: 12px !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Space Grotesk', sans-serif !important;
 }
 
 /* ── Tabs ── */
 .stTabs [data-baseweb="tab-list"] {
-    background: #f1f5f9 !important;
-    border-radius: 12px !important;
+    background: #141414 !important;
+    border-radius: 0px !important;
     padding: 5px !important;
-    border: 1px solid #e2e8f0 !important;
-    gap: 3px !important;
+    border: 1px solid #2a2a2a !important;
+    gap: 0px !important;
 }
 
 .stTabs [data-baseweb="tab"] {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Space Grotesk', sans-serif !important;
     font-size: 13px !important;
     font-weight: 500 !important;
-    color: #94a3b8 !important;
-    border-radius: 8px !important;
+    color: #666 !important;
+    border-radius: 0px !important;
     padding: 9px 18px !important;
     border: none !important;
     background: transparent !important;
@@ -183,90 +181,86 @@ div[data-testid="stMetricDelta"] > div {
 }
 
 .stTabs [data-baseweb="tab"]:hover {
-    color: #475569 !important;
-    background: #ffffff !important;
+    color: #FF6B5A !important;
+    background: #1a1a1a !important;
 }
 
 .stTabs [aria-selected="true"] {
-    color: #1d4ed8 !important;
-    background: #ffffff !important;
+    color: #FF6B5A !important;
+    background: #1a1a1a !important;
     font-weight: 600 !important;
-    box-shadow: 0 1px 4px rgba(15,23,42,0.08) !important;
+    border-bottom: 2px solid #FF6B5A !important;
 }
 
 /* ── Buttons ── */
 .stButton > button {
-    background: #3b82f6 !important;
-    border: 1px solid #2563eb !important;
-    color: #ffffff !important;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 600 !important;
+    background: #FF6B5A !important;
+    border: none !important;
+    color: #0a0a0a !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 700 !important;
     font-size: 13px !important;
-    border-radius: 10px !important;
+    border-radius: 0px !important;
     padding: 0.5rem 1.25rem !important;
     transition: all 0.2s ease !important;
-    letter-spacing: 0.2px !important;
-    box-shadow: 0 1px 3px rgba(59,130,246,0.3) !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
 }
 
 .stButton > button:hover {
-    background: #2563eb !important;
-    border-color: #1d4ed8 !important;
-    box-shadow: 0 4px 12px rgba(59,130,246,0.3) !important;
+    background: #ff8577 !important;
     transform: translateY(-1px) !important;
 }
 
 /* ── Alerts ── */
 div[data-testid="stAlert"] {
-    border-radius: 12px !important;
+    border-radius: 0px !important;
     border: 1px solid !important;
 }
 
 /* ── Dataframe ── */
 div[data-testid="stDataFrame"] {
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 12px !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 0px !important;
     overflow: hidden !important;
-    box-shadow: 0 1px 4px rgba(15,23,42,0.05) !important;
 }
 
 /* ── Expander ── */
 div[data-testid="stExpander"] {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 12px !important;
+    background: #141414 !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 0px !important;
     margin-bottom: 0.75rem !important;
-    box-shadow: 0 1px 4px rgba(15,23,42,0.04) !important;
 }
 
 details[data-testid="stExpanderDetails"] {
-    background: #f8fafc !important;
+    background: #111 !important;
 }
 
 /* ── Code blocks ── */
 .stCode, code {
     font-family: 'JetBrains Mono', monospace !important;
-    background: #f1f5f9 !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 8px !important;
-    color: #1e40af !important;
+    background: #141414 !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 0px !important;
+    color: #FF6B5A !important;
 }
 
 /* ── Input fields ── */
 .stTextInput > div > div > input,
 .stSelectbox > div > div > div,
 .stMultiSelect > div > div {
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    border-radius: 10px !important;
-    color: #0f172a !important;
-    font-family: 'Inter', sans-serif !important;
+    background: #141414 !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 0px !important;
+    color: #e8e8e8 !important;
+    font-family: 'Space Grotesk', sans-serif !important;
 }
 
 /* ── Headings ── */
 h1, h2, h3, h4, h5 {
-    font-family: 'Inter', sans-serif !important;
-    color: #0f172a !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    color: #ffffff !important;
     font-weight: 700 !important;
     letter-spacing: -0.3px !important;
 }
@@ -278,20 +272,20 @@ h3 { font-size: 1.125rem !important; }
 /* ── Dividers ── */
 hr {
     border: none !important;
-    border-top: 1px solid #e2e8f0 !important;
+    border-top: 1px solid #2a2a2a !important;
     margin: 1.5rem 0 !important;
 }
 
 /* ── Captions ── */
 div[data-testid="stCaption"] p {
-    color: #94a3b8 !important;
+    color: #666 !important;
     font-size: 12px !important;
     font-family: 'JetBrains Mono', monospace !important;
 }
 
 /* ── Spinner ── */
 .stSpinner > div {
-    border-color: #3b82f6 !important;
+    border-color: #FF6B5A !important;
     border-right-color: transparent !important;
 }
 
@@ -302,20 +296,17 @@ div[data-testid="stCaption"] p {
 
 /* KPI card */
 .kpi-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 0px;
     padding: 1.25rem 1.5rem;
     position: relative;
     overflow: hidden;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 6px rgba(15,23,42,0.06);
+    transition: all 0.2s ease;
 }
 
 .kpi-card:hover {
-    border-color: #bfdbfe;
-    box-shadow: 0 6px 24px rgba(59,130,246,0.1);
-    transform: translateY(-2px);
+    border-color: #FF6B5A;
 }
 
 .kpi-card-accent {
@@ -323,16 +314,15 @@ div[data-testid="stCaption"] p {
     top: 0; left: 0;
     width: 3px;
     height: 100%;
-    border-radius: 14px 0 0 14px;
 }
 
 .kpi-label {
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #94a3b8;
-    font-family: 'Inter', sans-serif;
+    letter-spacing: 2px;
+    color: #666;
+    font-family: 'Space Grotesk', sans-serif;
     margin-bottom: 0.5rem;
 }
 
@@ -341,12 +331,12 @@ div[data-testid="stCaption"] p {
     font-weight: 800;
     font-family: 'JetBrains Mono', monospace;
     line-height: 1.1;
-    color: #0f172a;
+    color: #ffffff;
 }
 
 .kpi-sub {
     font-size: 11px;
-    color: #94a3b8;
+    color: #555;
     font-family: 'JetBrains Mono', monospace;
     margin-top: 0.25rem;
 }
@@ -358,15 +348,15 @@ div[data-testid="stCaption"] p {
     gap: 0.75rem;
     margin-bottom: 1.25rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #1a1a1a;
 }
 
 .section-header-icon {
     width: 34px;
     height: 34px;
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    border-radius: 9px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -377,14 +367,15 @@ div[data-testid="stCaption"] p {
 .section-header-text {
     font-size: 0.9375rem;
     font-weight: 700;
-    color: #0f172a;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.2px;
+    color: #e8e8e8;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .section-header-sub {
     font-size: 11px;
-    color: #94a3b8;
+    color: #555;
     font-family: 'JetBrains Mono', monospace;
 }
 
@@ -394,35 +385,36 @@ div[data-testid="stCaption"] p {
     align-items: center;
     gap: 4px;
     padding: 3px 10px;
-    border-radius: 20px;
+    border-radius: 0px;
     font-size: 11px;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: 0.4px;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .badge-success {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #15803d;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid #22c55e;
+    color: #22c55e;
 }
 
 .badge-danger {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #dc2626;
+    background: rgba(255,107,90,0.1);
+    border: 1px solid #FF6B5A;
+    color: #FF6B5A;
 }
 
 .badge-warning {
-    background: #fffbeb;
-    border: 1px solid #fde68a;
-    color: #d97706;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid #f59e0b;
+    color: #f59e0b;
 }
 
 .badge-info {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    color: #1d4ed8;
+    background: rgba(255,107,90,0.08);
+    border: 1px solid #FF6B5A;
+    color: #FF6B5A;
 }
 
 /* Live dot */
@@ -432,9 +424,10 @@ div[data-testid="stCaption"] p {
     gap: 6px;
     font-size: 12px;
     font-weight: 600;
-    color: #16a34a;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: 0.4px;
+    color: #22c55e;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .live-dot::before {
@@ -442,23 +435,22 @@ div[data-testid="stCaption"] p {
     width: 8px;
     height: 8px;
     background: #22c55e;
-    border-radius: 50%;
-    box-shadow: 0 0 0 2px #dcfce7;
+    border-radius: 0;
     animation: live-blink 1.5s ease-in-out infinite;
     flex-shrink: 0;
 }
 
 @keyframes live-blink {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 2px #dcfce7; }
-    50% { opacity: 0.5; box-shadow: 0 0 0 4px #dcfce7; }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
 }
 
 /* Alert banners */
 .alert-critical {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-left: 4px solid #ef4444;
-    border-radius: 12px;
+    background: rgba(255,107,90,0.08);
+    border: 1px solid #FF6B5A;
+    border-left: 3px solid #FF6B5A;
+    border-radius: 0px;
     padding: 1rem 1.25rem;
     display: flex;
     align-items: flex-start;
@@ -466,34 +458,34 @@ div[data-testid="stCaption"] p {
 }
 
 .alert-warning {
-    background: #fffbeb;
-    border: 1px solid #fde68a;
-    border-left: 4px solid #f59e0b;
-    border-radius: 12px;
+    background: rgba(245,158,11,0.08);
+    border: 1px solid #f59e0b;
+    border-left: 3px solid #f59e0b;
+    border-radius: 0px;
     padding: 1rem 1.25rem;
 }
 
 .alert-success {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-left: 4px solid #22c55e;
-    border-radius: 12px;
+    background: rgba(34,197,94,0.06);
+    border: 1px solid #22c55e;
+    border-left: 3px solid #22c55e;
+    border-radius: 0px;
     padding: 1rem 1.25rem;
 }
 
 .alert-info {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    border-left: 4px solid #3b82f6;
-    border-radius: 12px;
+    background: rgba(255,107,90,0.05);
+    border: 1px solid #333;
+    border-left: 3px solid #FF6B5A;
+    border-radius: 0px;
     padding: 1rem 1.25rem;
 }
 
 /* Countermeasure card */
 .countermeasure-card {
-    background: linear-gradient(135deg, #faf5ff, #eff6ff);
-    border: 1px solid #ddd6fe;
-    border-radius: 14px;
+    background: #141414;
+    border: 1px solid #FF6B5A;
+    border-radius: 0px;
     padding: 1.25rem 1.5rem;
     position: relative;
     overflow: hidden;
@@ -502,44 +494,37 @@ div[data-testid="stCaption"] p {
 .countermeasure-card::before {
     content: '';
     position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: conic-gradient(from 0deg, transparent 0%, rgba(139,92,246,0.04) 50%, transparent 100%);
-    animation: rotate-bg 8s linear infinite;
-}
-
-@keyframes rotate-bg {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(255,107,90,0.05), transparent);
 }
 
 /* Anomaly record */
 .anomaly-record {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-radius: 10px;
+    background: rgba(255,107,90,0.06);
+    border: 1px solid #FF6B5A;
+    border-radius: 0px;
     padding: 1rem 1.25rem;
     margin-bottom: 0.75rem;
     transition: all 0.2s ease;
 }
 
 .anomaly-record:hover {
-    background: #fee2e2;
-    border-color: #fca5a5;
+    background: rgba(255,107,90,0.12);
 }
 
 .normal-record {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-radius: 10px;
+    background: rgba(34,197,94,0.05);
+    border: 1px solid #1a3a1a;
+    border-radius: 0px;
     padding: 1rem 1.25rem;
 }
 
 /* Jail card */
 .jail-card {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-radius: 14px;
+    background: #141414;
+    border: 1px solid #FF6B5A;
+    border-radius: 0px;
     padding: 1.25rem 1.5rem;
     margin-bottom: 1rem;
     position: relative;
@@ -556,12 +541,12 @@ div[data-testid="stCaption"] p {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9375rem;
     font-weight: 700;
-    color: #dc2626;
+    color: #FF6B5A;
 }
 
 /* Spinner override */
 .stSpinner > div {
-    border-color: #3b82f6 !important;
+    border-color: #FF6B5A !important;
     border-right-color: transparent !important;
 }
 
@@ -569,23 +554,26 @@ div[data-testid="stCaption"] p {
 .page-title-area {
     margin-bottom: 2rem;
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #2a2a2a;
 }
 
 .page-title {
     font-size: 1.625rem;
     font-weight: 800;
-    color: #0f172a;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.5px;
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     line-height: 1.2;
 }
 
 .page-subtitle {
     font-size: 12px;
-    color: #94a3b8;
+    color: #555;
     font-family: 'JetBrains Mono', monospace;
     margin-top: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .page-meta {
@@ -598,9 +586,9 @@ div[data-testid="stCaption"] p {
 
 /* Metric strip */
 .metric-strip {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 0px;
     padding: 0.875rem 1.25rem;
     display: flex;
     align-items: center;
@@ -608,7 +596,6 @@ div[data-testid="stCaption"] p {
     gap: 1rem;
     flex-wrap: wrap;
     margin-bottom: 1.5rem;
-    box-shadow: 0 1px 4px rgba(15,23,42,0.04);
 }
 
 .metric-strip-item {
@@ -621,16 +608,16 @@ div[data-testid="stCaption"] p {
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #94a3b8;
-    font-family: 'Inter', sans-serif;
+    letter-spacing: 1.5px;
+    color: #555;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .metric-strip-value {
     font-size: 13px;
     font-weight: 700;
     font-family: 'JetBrains Mono', monospace;
-    color: #1e293b;
+    color: #FF6B5A;
 }
 </style>
 """
@@ -640,26 +627,27 @@ div[data-testid="stCaption"] p {
 # HELPER: Plotly Light Theme
 # ============================================================================
 PLOTLY_DARK_THEME = dict(
-    paper_bgcolor="rgba(255,255,255,0)",
-    plot_bgcolor="rgba(248,250,252,0.5)",
-    font=dict(family="Inter, sans-serif", color="#64748b", size=12),
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(20,20,20,0.5)",
+    font=dict(family="Space Grotesk, sans-serif", color="#888", size=12),
     xaxis=dict(
-        gridcolor="rgba(148,163,184,0.15)",
-        linecolor="#e2e8f0",
-        tickcolor="#cbd5e1",
-        zerolinecolor="#e2e8f0",
+        gridcolor="rgba(255,107,90,0.08)",
+        linecolor="#2a2a2a",
+        tickcolor="#444",
+        zerolinecolor="#2a2a2a",
     ),
     yaxis=dict(
-        gridcolor="rgba(148,163,184,0.15)",
-        linecolor="#e2e8f0",
-        tickcolor="#cbd5e1",
-        zerolinecolor="#e2e8f0",
+        gridcolor="rgba(255,107,90,0.08)",
+        linecolor="#2a2a2a",
+        tickcolor="#444",
+        zerolinecolor="#2a2a2a",
     ),
     margin=dict(l=16, r=16, t=32, b=16),
     legend=dict(
-        bgcolor="rgba(255,255,255,0.9)",
-        bordercolor="#e2e8f0",
+        bgcolor="rgba(20,20,20,0.9)",
+        bordercolor="#2a2a2a",
         borderwidth=1,
+        font=dict(color="#aaa"),
     ),
 )
 
@@ -810,9 +798,9 @@ def _prepare_display_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 def _style_anomalies(row):
     if row.get('Status') == 'Anomaly':
-        return ['background-color: #fef2f2; color: #b91c1c; font-weight: 600;'] * len(row)
+        return ['background-color: rgba(255,107,90,0.1); color: #FF6B5A; font-weight: 600;'] * len(row)
     else:
-        return ['background-color: #f0fdf4; color: #166534;'] * len(row)
+        return ['background-color: rgba(34,197,94,0.06); color: #22c55e;'] * len(row)
 
 
 def generate_mock_llm_post_mortem(row: pd.Series) -> str:
@@ -869,7 +857,7 @@ def render_page_header(df: Optional[pd.DataFrame] = None):
             <div class="page-meta">
                 <span class="live-dot">SECURE NODE ACTIVE</span>
                 <span class="badge badge-info">Model {version}</span>
-                <span style="font-size:11px; color:#94a3b8; font-family:'JetBrains Mono',monospace;">{now}</span>
+                <span style="font-size:11px; color:#555; font-family:'JetBrains Mono',monospace;">{now}</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -882,9 +870,9 @@ def render_page_header(df: Optional[pd.DataFrame] = None):
             _, color, _ = get_status_info(anomaly_count / total if total > 0 else 0)
             st.markdown(f"""
             <div style="text-align:right; padding-top:1rem;">
-                <div style="font-size:11px; color:#94a3b8; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; font-family:'Inter',sans-serif;">System Health</div>
+                <div style="font-size:11px; color:#666; text-transform:uppercase; letter-spacing:2px; margin-bottom:4px; font-family:'Space Grotesk',sans-serif;">System Health</div>
                 <div style="font-size:2.5rem; font-weight:800; color:{color}; font-family:'JetBrains Mono',monospace; line-height:1;">{100-rate:.0f}%</div>
-                <div style="font-size:11px; color:#94a3b8; font-family:'JetBrains Mono',monospace;">stability score</div>
+                <div style="font-size:11px; color:#555; font-family:'JetBrains Mono',monospace;">stability score</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -902,11 +890,11 @@ def render_kpi_strip(df: pd.DataFrame):
 
     cols = st.columns(5)
     kpi_data = [
-        ("Total Events", f"{total:,}", "#2563eb", "All telemetry records"),
-        ("Anomalies", f"{anomaly_count:,}", "#dc2626", f"{anomaly_rate}% of traffic"),
-        ("Normal", f"{normal_count:,}", "#16a34a", "Clean signals"),
-        ("Avg CPU", f"{avg_cpu}%", "#7c3aed", "Last batch"),
-        ("Avg Memory", f"{avg_mem}%", "#ea580c", "Last batch"),
+        ("Total Events", f"{total:,}", "#FF6B5A", "All telemetry records"),
+        ("Anomalies", f"{anomaly_count:,}", "#ef4444", f"{anomaly_rate}% of traffic"),
+        ("Normal", f"{normal_count:,}", "#22c55e", "Clean signals"),
+        ("Avg CPU", f"{avg_cpu}%", "#FF6B5A", "Last batch"),
+        ("Avg Memory", f"{avg_mem}%", "#f59e0b", "Last batch"),
     ]
     for col, (label, value, color, sub) in zip(cols, kpi_data):
         with col:
@@ -943,8 +931,8 @@ def render_status_banner(anomaly_ratio: float):
         <div style="display:flex; align-items:center; gap:0.75rem;">
             <span style="font-size:1.2rem;">{icon}</span>
             <div>
-                <div style="font-weight:700; font-size:13px; font-family:'Inter',sans-serif; color:{'#b91c1c' if anomaly_ratio > ANOMALY_CRITICAL_THRESHOLD else '#0f172a'};">SYSTEM STATUS: {status}</div>
-                <div style="font-size:12px; color:#64748b; font-family:'JetBrains Mono',monospace; margin-top:2px;">{message}</div>
+                <div style="font-weight:700; font-size:13px; font-family:'Space Grotesk',sans-serif; color:{'#FF6B5A' if anomaly_ratio > ANOMALY_CRITICAL_THRESHOLD else '#e8e8e8'}; text-transform:uppercase; letter-spacing:1px;">SYSTEM STATUS: {status}</div>
+                <div style="font-size:12px; color:#666; font-family:'JetBrains Mono',monospace; margin-top:2px;">{message}</div>
             </div>
         </div>
     </div>
@@ -960,16 +948,16 @@ def render_stability_gauge(stability_score: float):
         mode="gauge+number",
         value=stability_score,
         number={"font": {"size": 52, "color": color_val, "family": "JetBrains Mono"}, "suffix": "%"},
-        title={"text": "AI Stability Score", "font": {"size": 13, "color": "#64748b", "family": "Inter"}},
+        title={"text": "AI STABILITY SCORE", "font": {"size": 13, "color": "#666", "family": "Space Grotesk"}},
         gauge={
-            "axis": {"range": [0, 100], "tickcolor": "#cbd5e1", "tickfont": {"color": "#94a3b8", "size": 10}},
+            "axis": {"range": [0, 100], "tickcolor": "#333", "tickfont": {"color": "#555", "size": 10}},
             "bar": {"color": color_val, "thickness": 0.2},
-            "bgcolor": "rgba(248,250,252,0.0)",
+            "bgcolor": "rgba(20,20,20,0.0)",
             "borderwidth": 0,
             "steps": [
-                {"range": [0, 40], "color": "rgba(239,68,68,0.08)"},
-                {"range": [40, 70], "color": "rgba(245,158,11,0.07)"},
-                {"range": [70, 100], "color": "rgba(34,197,94,0.07)"},
+                {"range": [0, 40], "color": "rgba(255,107,90,0.1)"},
+                {"range": [40, 70], "color": "rgba(245,158,11,0.08)"},
+                {"range": [70, 100], "color": "rgba(34,197,94,0.08)"},
             ],
             "threshold": {
                 "line": {"color": color_val, "width": 3},
@@ -1005,13 +993,13 @@ def render_analysis_charts(df: pd.DataFrame, max_chart_records: int = 150):
         fig = go.Figure()
         fig.add_trace(go.Scatter(
             x=df_chart['index'], y=df_chart['cpu_usage'],
-            name='CPU %', line=dict(color='#2563eb', width=2),
-            fill='tozeroy', fillcolor='rgba(37,99,235,0.07)',
+            name='CPU %', line=dict(color='#FF6B5A', width=2),
+            fill='tozeroy', fillcolor='rgba(255,107,90,0.1)',
         ))
         fig.add_trace(go.Scatter(
             x=df_chart['index'], y=df_chart['memory_usage'],
-            name='Memory %', line=dict(color='#7c3aed', width=2, dash='dot'),
-            fill='tozeroy', fillcolor='rgba(124,58,237,0.04)',
+            name='Memory %', line=dict(color='#f59e0b', width=2, dash='dot'),
+            fill='tozeroy', fillcolor='rgba(245,158,11,0.06)',
         ))
         fig.update_layout(**PLOTLY_DARK_THEME, height=240, showlegend=True)
         st.plotly_chart(fig, use_container_width=True)
@@ -1029,12 +1017,12 @@ def render_analysis_charts(df: pd.DataFrame, max_chart_records: int = 150):
         fig2 = go.Figure()
         fig2.add_trace(go.Scatter(
             x=df_chart['index'], y=df_chart['network_traffic'],
-            name='Network', line=dict(color='#ea580c', width=2),
-            fill='tozeroy', fillcolor='rgba(234,88,12,0.06)',
+            name='Network', line=dict(color='#FF6B5A', width=2),
+            fill='tozeroy', fillcolor='rgba(255,107,90,0.08)',
         ))
         fig2.add_trace(go.Scatter(
             x=df_chart['index'], y=df_chart['disk_io'],
-            name='Disk I/O', line=dict(color='#34d399', width=1.5, dash='dot'),
+            name='Disk I/O', line=dict(color='#22c55e', width=1.5, dash='dot'),
         ))
         fig2.update_layout(**PLOTLY_DARK_THEME, height=240, showlegend=True)
         st.plotly_chart(fig2, use_container_width=True)
@@ -1059,16 +1047,16 @@ def render_analysis_charts(df: pd.DataFrame, max_chart_records: int = 150):
             values=counts.values.tolist(),
             hole=0.6,
             marker=dict(
-                colors=['#ef4444', '#22c55e'] if 'Anomaly' in counts.index else ['#22c55e'],
-                line=dict(color='rgba(14,20,35,0.8)', width=2),
+                colors=['#FF6B5A', '#22c55e'] if 'Anomaly' in counts.index else ['#22c55e'],
+                line=dict(color='#0a0a0a', width=2),
             ),
-            textfont=dict(family='Inter', size=12, color='#cbd5e1'),
+            textfont=dict(family='Space Grotesk', size=12, color='#aaa'),
         ))
         fig3.update_layout(**PLOTLY_DARK_THEME, height=240, showlegend=True)
         fig3.add_annotation(
             text=f"{len(df):,}<br><span style='font-size:10px'>events</span>",
             x=0.5, y=0.5, showarrow=False,
-            font=dict(size=18, color='#f1f5f9', family='JetBrains Mono'),
+            font=dict(size=18, color='#e8e8e8', family='JetBrains Mono'),
         )
         st.plotly_chart(fig3, use_container_width=True)
 
@@ -1086,7 +1074,7 @@ def render_analysis_charts(df: pd.DataFrame, max_chart_records: int = 150):
             x=df_chart['index'],
             y=df_chart['is_anomaly'],
             marker=dict(
-                color=df_chart['is_anomaly'].apply(lambda v: 'rgba(239,68,68,0.7)' if v == 1 else 'rgba(34,197,94,0.3)'),
+                color=df_chart['is_anomaly'].apply(lambda v: 'rgba(255,107,90,0.8)' if v == 1 else 'rgba(34,197,94,0.2)'),
                 line=dict(width=0),
             ),
             name='Anomaly',
@@ -1105,7 +1093,7 @@ def render_countermeasures_status(df: pd.DataFrame):
         st.markdown("""
         <div class="alert-success">
             <div style="font-weight:600; font-size:13px; font-family:'Inter',sans-serif; color:#4ade80;">Active Countermeasures System</div>
-            <div style="font-size:12px; color:#475569; font-family:'JetBrains Mono',monospace; margin-top:4px;">SCANNING... — No active threats detected. All systems nominal.</div>
+            <div style="font-size:12px; color:#888; font-family:'JetBrains Mono',monospace; margin-top:4px;">SCANNING... — No active threats detected. All systems nominal.</div>
         </div>""", unsafe_allow_html=True)
         return
     latest = anomalies.iloc[-1]
@@ -1119,7 +1107,7 @@ def render_countermeasures_status(df: pd.DataFrame):
                 <span class="badge badge-danger">⚡ COUNTERMEASURE ACTIVE</span>
             </div>
             <div style="font-size:14px; font-weight:700; color:#c4b5fd; font-family:'JetBrains Mono',monospace; margin-bottom:0.5rem;">{remediation}</div>
-            <div style="font-size:11px; color:#475569; font-family:'JetBrains Mono',monospace;">Triggered by: <span style="color:#94a3b8;">{cause}</span> — Device: <span style="color:#94a3b8;">{device}</span></div>
+            <div style="font-size:11px; color:#888; font-family:'JetBrains Mono',monospace;">Triggered by: <span style="color:#94a3b8;">{cause}</span> — Device: <span style="color:#94a3b8;">{device}</span></div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -1325,8 +1313,8 @@ def render_cyber_jail():
             if not jailed:
                 st.markdown("""
                 <div class="alert-success">
-                    <div style="font-weight:600; font-size:13px; font-family:'Inter',sans-serif; color:#4ade80;">Cyber Jail is Empty</div>
-                    <div style="font-size:12px; color:#475569; font-family:'JetBrains Mono',monospace; margin-top:4px;">No devices are currently quarantined. Internal security perimeter is clean.</div>
+                    <div style="font-weight:600; font-size:13px; font-family:'Space Grotesk',sans-serif; color:#22c55e; text-transform:uppercase;">Cyber Jail Empty</div>
+                    <div style="font-size:12px; color:#666; font-family:'JetBrains Mono',monospace; margin-top:4px;">No devices quarantined. Security perimeter clear.</div>
                 </div>""", unsafe_allow_html=True)
                 return
 
@@ -1347,11 +1335,11 @@ def render_cyber_jail():
                         <div class="jail-card-header">
                             <div>
                                 <div class="jail-device-id">⛓ {dev_id}</div>
-                                <div style="font-size:11px; color:#475569; font-family:'JetBrains Mono',monospace; margin-top:2px;">Quarantined: {timestamp}</div>
+                                <div style="font-size:11px; color:#666; font-family:'JetBrains Mono',monospace; margin-top:2px;">Quarantined: {timestamp}</div>
                             </div>
                             <span class="badge badge-danger">BLOCKED</span>
                         </div>
-                        <div style="font-size:12px; color:#94a3b8; font-family:'Inter',sans-serif;"><b>Reason:</b> {reason}</div>
+                        <div style="font-size:12px; color:#888; font-family:'Space Grotesk',sans-serif;"><b>Reason:</b> {reason}</div>
                     </div>""", unsafe_allow_html=True)
                 with c_btn:
                     st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
@@ -1422,10 +1410,10 @@ def render_system_logs():
         def style_logs(row):
             sev = row["Severity"]
             if sev in ("ERROR", "CRITICAL"):
-                return ['background-color: rgba(239,68,68,0.12); color:#fca5a5;'] * len(row)
+                return ['background-color: rgba(255,107,90,0.12); color:#FF6B5A;'] * len(row)
             elif sev == "WARNING":
-                return ['background-color: rgba(245,158,11,0.1); color:#fde68a;'] * len(row)
-            return ['color:#94a3b8;'] * len(row)
+                return ['background-color: rgba(245,158,11,0.1); color:#f59e0b;'] * len(row)
+            return ['color:#888;'] * len(row)
 
         st.dataframe(df_logs.style.apply(style_logs, axis=1), use_container_width=True, height=560)
 
@@ -1461,7 +1449,7 @@ def render_alert_history(df: Optional[pd.DataFrame]):
         display_df = display_df.sort_values(by='ID', ascending=False)
 
     def style_alerts(row):
-        return ['background-color: rgba(239,68,68,0.1); color:#fca5a5;'] * len(row)
+        return ['background-color: rgba(255,107,90,0.1); color:#FF6B5A;'] * len(row)
 
     st.dataframe(display_df.style.apply(style_alerts, axis=1), use_container_width=True, height=560)
 
@@ -1472,8 +1460,6 @@ def render_alert_history(df: Optional[pd.DataFrame]):
 def render_fallback_dashboard():
     st.markdown(f"""
     <div class="alert-info" style="margin-bottom:1.5rem;">
-        <div style="font-weight:700; font-size:13px; font-family:'Inter',sans-serif; color:#38bdf8; margin-bottom:6px;">Quick Setup Guide</div>
-        <div style="font-size:12px; color:#64748b; font-family:'JetBrains Mono',monospace; line-height:1.8;">
             <b style="color:#94a3b8;"># Terminal 1</b><br>
             python -m uvicorn backend.main:app --host {API_HOST} --port {API_PORT} --reload<br><br>
             <b style="color:#94a3b8;"># Terminal 2</b><br>
@@ -1502,7 +1488,7 @@ def _render_refresh_sidebar() -> Tuple[int, str]:
         st.markdown("""
         <div style="padding:1rem 0 0.5rem; font-family:'Inter',sans-serif;">
             <div style="font-size:11px; font-weight:700; text-transform:uppercase;
-                        letter-spacing:1.5px; color:#94a3b8; margin-bottom:0.75rem;">🧭 Navigation</div>
+                        letter-spacing:1.5px; color:#666; margin-bottom:0.75rem;">NAVIGATION</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1513,12 +1499,12 @@ def _render_refresh_sidebar() -> Tuple[int, str]:
             key="nav_radio"
         )
 
-        st.markdown("<hr style='border-color:#e2e8f0; margin:1rem 0;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border-color:#2a2a2a; margin:1rem 0;'>", unsafe_allow_html=True)
 
         st.markdown("""
         <div style="padding:0; font-family:'Inter',sans-serif;">
             <div style="font-size:11px; font-weight:700; text-transform:uppercase;
-                        letter-spacing:1.5px; color:#94a3b8; margin-bottom:0.75rem;">⚙️ Refresh Control</div>
+                        letter-spacing:1.5px; color:#666; margin-bottom:0.75rem;">REFRESH</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1560,12 +1546,12 @@ def _render_refresh_sidebar() -> Tuple[int, str]:
         if last_updated:
             elapsed = int(time.time() - last_updated)
             st.markdown(
-                f"<div style='font-size:11px; color:#94a3b8; font-family:monospace; margin-top:0.5rem;'>"
+                f"<div style='font-size:11px; color:#555; font-family:monospace; margin-top:0.5rem;'>"
                 f"Last updated: {elapsed}s ago</div>",
                 unsafe_allow_html=True,
             )
 
-        st.markdown("<hr style='border-color:#e2e8f0; margin:1rem 0;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border-color:#2a2a2a; margin:1rem 0;'>", unsafe_allow_html=True)
 
     return interval_seconds, active_page
 
@@ -1624,9 +1610,9 @@ def main():
             st.markdown(f"""
             <div class="alert-critical">
                 <div>
-                    <div style="font-weight:700; font-size:13px; font-family:'Inter',sans-serif; color:#f87171;">API Offline — Cannot Connect</div>
-                    <div style="font-size:11px; color:#94a3b8; font-family:'JetBrains Mono',monospace; margin-top:4px;">{health_message}</div>
-                    <div style="font-size:11px; color:#475569; font-family:'JetBrains Mono',monospace; margin-top:2px;">Target: {API_BASE_URL}</div>
+                    <div style="font-weight:700; font-size:13px; font-family:'Space Grotesk',sans-serif; color:#FF6B5A; text-transform:uppercase;">API OFFLINE</div>
+                    <div style="font-size:11px; color:#666; font-family:'JetBrains Mono',monospace; margin-top:4px;">{health_message}</div>
+                    <div style="font-size:11px; color:#555; font-family:'JetBrains Mono',monospace; margin-top:2px;">Target: {API_BASE_URL}</div>
                 </div>
             </div>""", unsafe_allow_html=True)
             render_fallback_dashboard()
@@ -1634,8 +1620,8 @@ def main():
         elif df is None or df.empty:
             st.markdown("""
             <div class="alert-info">
-                <div style="font-weight:600; font-size:13px; font-family:'Inter',sans-serif; color:#38bdf8;">Connected — Awaiting Data</div>
-                <div style="font-size:12px; color:#475569; font-family:'JetBrains Mono',monospace; margin-top:4px;">The inference engine is active. Start the live simulator to generate telemetry.</div>
+                <div style="font-weight:600; font-size:13px; font-family:'Space Grotesk',sans-serif; color:#FF6B5A; text-transform:uppercase;">Connected — Awaiting Data</div>
+                <div style="font-size:12px; color:#666; font-family:'JetBrains Mono',monospace; margin-top:4px;">Engine active. Start the simulator to generate telemetry.</div>
             </div>""", unsafe_allow_html=True)
             st.code("python simulator/live_simulator.py", language="bash")
 
